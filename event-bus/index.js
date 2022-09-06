@@ -6,9 +6,17 @@ const app = express();
 
 app.use(bodyParser.json());
 
+let events = [];
+
+app.get("/events", (req, res) => {
+  res.send(events);
+});
+
 app.post("/events", async (req, res) => {
   const event = req.body;
   console.log("first event ->", req.body);
+
+  events.push(event);
 
   await axios.post("http://localhost:4000/events", event);
   await axios.post("http://localhost:4001/events", event);
